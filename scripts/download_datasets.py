@@ -20,10 +20,14 @@ DIRECT = {
     'ofac/sdn.csv': 'https://www.treasury.gov/ofac/downloads/sdn.csv',
 }
  
- 
 def have_kaggle() -> bool:
-    return bool(os.getenv('KAGGLE_USERNAME') and os.getenv('KAGGLE_KEY'))
- 
+    return bool(
+        os.getenv('KAGGLE_API_TOKEN')
+        or (
+            os.getenv('KAGGLE_USERNAME')
+            and os.getenv('KAGGLE_KEY')
+        )
+    )
  
 def fetch_kaggle(name: str, ref: str) -> None:
     target = RAW / name
