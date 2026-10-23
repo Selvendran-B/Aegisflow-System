@@ -72,7 +72,7 @@ services:
       POSTGRES_DB: ${DB_NAME:-aegisflow}
 
     ports:
-      - "5432:5432"
+      - "5437:5432"
 
     volumes:
       - pg_data:/var/lib/postgresql/data
