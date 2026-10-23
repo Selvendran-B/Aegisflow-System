@@ -1,0 +1,16 @@
+schema: '2.0'
+stages:
+  features_pit:
+    cmd: python -m aegis_ml.features.offline --out 
+      data/features/features_pit.parquet
+    deps:
+    - path: ml/src/aegis_ml/features
+      hash: md5
+      md5: fd2fe70de7187b0f12ef911ffe349109.dir
+      size: 44925
+      nfiles: 8
+    outs:
+    - path: data/features/features_pit.parquet
+      hash: md5
+      md5: da41b8884794658af9a0f41ee91db0a4
+      size: 484005

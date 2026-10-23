@@ -157,7 +157,17 @@ def main():
     a = ap.parse_args()
     eng = sa.create_engine(os.environ["DATABASE_URL"])
     txns = pd.read_sql(
-        "SELECT id, ts, account_id, amount, device_id, ip_id FROM transactions",
+        """
+        SELECT
+            txn_id AS id,
+            occurred_at AS ts,
+            account_id,
+            amount,
+            device_id,
+            host(ip_address) AS ip_id
+        FROM transactions
+        ORDER BY occurred_at, txn_id
+        """,
         eng,
     )
     snaps = pd.read_sql(
