@@ -91,15 +91,16 @@ def main() -> int:
         conn.execute(
             "DELETE FROM known_fraud_entities WHERE source = 'seed_pre_T0'"
         )
-        conn.executemany(
-            """
-            INSERT INTO known_fraud_entities
-                (entity_type, entity_id, confirmed_at, source)
-            VALUES ('account', %s, %s, 'seed_pre_T0')
-            ON CONFLICT DO NOTHING
-            """,
-            rows,
-        )
+        with conn.cursor() as cur:
+            cur.executemany(
+                """
+                INSERT INTO known_fraud_entities
+                    (entity_type, entity_id, confirmed_at, source)
+                VALUES ('account', %s, %s, 'seed_pre_T0')
+                ON CONFLICT DO NOTHING
+                """,
+                rows,
+            )
 
     print(f"T0 = {cutoff.isoformat()} -> {len(rows)} known-fraud accounts seeded")
     print("M3 training data must start at or after T0.")
